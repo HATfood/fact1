@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حامد بادپروا - کارت ویزیت مجازی</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
     <style>
@@ -122,10 +123,22 @@
             margin-bottom: 5px;
         }
 
+        .field {
+            font-size: 16px;
+            color: var(--subtle-text-color);
+        }
+
+        .info-boxes {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
         .info-box {
             display: flex;
             flex-direction: column;
             gap: 18px;
+            height: 100%;
             justify-content: flex-start;
             direction: ltr;
         }
@@ -168,7 +181,51 @@
             color: var(--accent-color);
         }
 
+        .info-text a.address-link {
+             color: var(--subtle-text-color);
+             text-decoration: none;
+        }
+        .info-text a.address-link:hover {
+             color: var(--accent-color);
+             text-decoration: none;
+        }
+
+        .qr-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            direction: rtl;
+        }
+
+        .qr-title {
+            font-size: 16px;
+            color: var(--primary-color);
+            text-align: center;
+            line-height: 1.4;
+            font-family: var(--persian-font);
+        }
+
+        #qrcode {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--background-color);
+            direction: ltr;
+        }
+
+        .qr-box .info-text {
+            text-align: center;
+            direction: rtl;
+        }
+        .qr-box .info-text a {
+             font-family: var(--persian-font);
+        }
+
         @media (max-width: 600px) {
+            .info-boxes {
+                grid-template-columns: 1fr;
+            }
             .glass-box {
                 padding: 25px 20px;
             }
@@ -177,6 +234,7 @@
             }
             .name { font-size: 24px; }
             .title { font-size: 16px; }
+            .field { font-size: 14px; }
             .info-text { font-size: 14px; }
             .info-item i { font-size: 18px; }
         }
@@ -196,34 +254,72 @@
         <div class="glass-box header-box">
             <h1 class="name persian-text">حامد بادپروا</h1>
             <h2 class="title persian-text">رئیس تولید</h2>
+            <!-- <h2 class="field persian-text">چای، ادویه، قهوه</h2> -->
         </div>
 
-        <div class="glass-box info-box">
-            <div class="info-item">
-                <i><i class="fas fa-phone-alt"></i></i>
-                <span class="info-text">
-                    <a href="tel:02835330271">028-35330271 (EXT: 105)</a>
-                </span>
+        <div class="info-boxes">
+            <div class="glass-box info-box">
+                <div class="info-item">
+                    <i><i class="fas fa-phone-alt"></i></i>
+                    <span class="info-text">
+                        <a href="tel:02835330271">028-35330271 (EXT: 105)</a>
+                    </span>
+                </div>
+                 <div class="info-item">
+                    <i><i class="fas fa-mobile-alt"></i></i>
+                    <span class="info-text">
+                        <a href="tel:+989128421662">0912 842 1662</a>
+                    </span>
+                </div>
+                <div class="info-item">
+                    <i><i class="fas fa-envelope"></i></i>
+                    <span class="info-text">
+                        <a href="mailto:Badparva.Hamed@HastiTamin.com">Badparva.Hamed@HastiTamin.com</a>
+                    </span>
+                </div>
             </div>
-             <div class="info-item">
-                <i><i class="fas fa-mobile-alt"></i></i>
-                <span class="info-text">
-                    <a href="tel:+989128421662">0912 842 1662</a>
-                </span>
-            </div>
-            <div class="info-item">
-                <i><i class="fas fa-envelope"></i></i>
-                <span class="info-text">
-                    <a href="mailto:Badparva.Hamed@HastiTamin.com">Badparva.Hamed@HastiTamin.com</a>
-                </span>
-            </div>
-             <div class="info-item">
-                <i><i class="fas fa-globe"></i></i>
-                <span class="info-text">
-                    <a href="http://www.hastitaamin.com" target="_blank">hastitaamin.com</a>
-                </span>
+
+            <div class="glass-box info-box">
+                 <div class="info-item">
+                    <i><i class="fas fa-globe"></i></i>
+                    <span class="info-text">
+                        <a href="http://www.hastitaamin.com" target="_blank">hastitaamin.com</a>
+                    </span>
+                </div>
+                <div class="info-item">
+                    <i><i class="fas fa-map-marker-alt"></i></i>
+                    <span class="info-text">
+                        <a href="https://maps.app.goo.gl/sPTYcb9MDT5SevFj6" target="_blank" class="address-link">
+                            No. 8, Afarin Alley, Alvand St., Argentina Sq., Tehran, Iran
+                        </a>
+                    </span>
+                </div>
             </div>
         </div>
+
+        <div class="glass-box qr-box">
+            <div class="qr-title">برای مشاهده کاتالوگ محصولات اسکن کنید</div>
+            <div id="qrcode"></div>
+            <span class="info-text">
+                <a href="https://hatfood.github.io/ExportCard/EN-CATALOG-DIGITAL-April-2025.pdf" target="_blank">
+                    دانلود کاتالوگ
+                </a>
+            </span>
+        </div>
     </div>
+
+    <script>
+        // Generate QR code for the catalogue PDF
+        window.onload = function() {
+            new QRCode(document.getElementById("qrcode"), {
+                text: "https://hatfood.github.io/ExportCard/EN-CATALOG-DIGITAL-April-2025.pdf",
+                width: 120,
+                height: 120,
+                colorDark: "#264b3b",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        };
+    </script>
 </body>
 </html>
